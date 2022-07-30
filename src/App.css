@@ -6,6 +6,20 @@
   height: 40vmin;
   pointer-events: none;
 }
+li {
+  list-style: none;
+}
+.cancelbtn {
+  cursor: pointer;
+}
+.addred
+{
+ border-bottom: 2px solid red;
+}
+.addblank
+{
+  border: 2px solid black;
+}
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
