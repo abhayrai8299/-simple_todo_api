@@ -1,28 +1,29 @@
-import React,{ memo }  from 'react'
+import React,{memo} from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { Delete } from '../redux/actions/action';
 
-const TodoList = ({todo,setTodo,editid,setisEditid,setactive,setText}) => {
-
-
-    const deleteHandler = (id) => {
-        setTodo(todo.filter((item) => item.id !== id));
-        if (editid !== "") {
-          setText("");
-        }
-        setisEditid("");
-        setactive(false);
-      };
-      const edit = (id) => {
-        const data = todo.find((element) => {
-          return element.id === id;
-        });
-        setText(data.taskName);
-        setisEditid(id);
-        setactive(true);
-      };
-console.log("TodoList")
+const TodoList = ({editid,setisEditid,setactive,setText}) => {
+  const todos =useSelector((state)=>state.Todoreducer.todos)
+  const dispatch = useDispatch();
+  const deleteHandler = (id) => {
+     dispatch(Delete(id))
+    if (editid !== "") {
+      setText("");
+    }
+    setisEditid("");
+    setactive(false);
+  };
+  const edit = (id) => {
+    const data = todos.find((element) => {
+      return element.id === id;
+    });
+    setText(data.taskName);
+    setisEditid(id);
+    setactive(true);
+  };
   return (
      <>
-       {todo.map((item) => {
+       {todos.map((item) => {
           return (
             <li key={item.id}>
               <ul>
