@@ -9,7 +9,6 @@ export default function App() {
   const [toggle,setToggle]=useState(false)
 
   const Changehandler = (e) => {
-    console.log(e.target.value);
     setText(e.target.value);
   };
 
@@ -20,7 +19,6 @@ export default function App() {
         setTodo(
           todo.map((element) => {
             if (element.id === editid) {
-              console.log(element);
               return { ...element, taskName: text };
             }
             return element;
@@ -51,9 +49,7 @@ export default function App() {
       }
   };
   const deleteHandler = (id) => {
-    console.log(id);
     setTodo(todo.filter((item) => item.id !== id));
-    console.log("ssad");
     if (editid !== "") {
       setText("");
     }
@@ -64,7 +60,6 @@ export default function App() {
     const data = todo.find((element) => {
       return element.id === id;
     });
-    console.log(data);
     setText(data.taskName);
     setisEditid(id);
     setactive(true);
@@ -91,7 +86,6 @@ export default function App() {
     const response = await axios
       .get("https://62e010f4fa8ed271c47dc10e.mockapi.io/task")
       .catch((e) => {
-        console.log(e);
       });
     setTodo(response.data);
   };
