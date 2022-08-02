@@ -1,12 +1,14 @@
 import React,{memo} from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { Delete } from '../redux/actions/action';
+import {postDelete } from '../redux/actions/action';
 
-const TodoList = ({editid,setisEditid,setactive,setText}) => {
+const TodoList = ({text,setTodo,todo,editid,setisEditid,setactive,setText}) => {
   const todos =useSelector((state)=>state.Todoreducer.todos)
-  const dispatch = useDispatch();
+  const dispatch=useDispatch();
+
   const deleteHandler = (id) => {
-     dispatch(Delete(id))
+    dispatch(postDelete(id))
+    setTodo(todos.filter((item) => item.id !== id));
     if (editid !== "") {
       setText("");
     }

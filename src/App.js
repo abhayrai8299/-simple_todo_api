@@ -1,35 +1,28 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import "./App.css";
 import TodoList from "./components/TodoList";
 import Form from "./components/Form";
-import { useDispatch } from "react-redux";
-import { SetData } from "./redux/actions/action";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchapi, SetData } from "./redux/actions/action";
 export default function App() {
+  const todos =useSelector((state)=>state.Todoreducer.todos)
   const dispatch = useDispatch();
-  const [todo, setTodo] = useState([]);
+  const [todo, setTodo] = useState(todos);
   const [text, setText] = useState("");
   const [editid, setisEditid] = useState("");
   const [active, setactive] = useState(false);
   const [toggle, setToggle] = useState(false);
 
-  const fetchData = async () => {
-    const response = await axios
-      .get("https://62e010f4fa8ed271c47dc10e.mockapi.io/task")
-      .catch((e) => {});
-    setTodo(response.data);
-  };
   const setData = () => {
     dispatch(SetData(todo));
+    console.log(todos)
   };
   useEffect(() => {
-    fetchData();
-    // setData();
+    dispatch(fetchapi());
   }, []);
   useEffect(() => {
     setData();
   }, [todo]);
-
   return (
     <div className="App">
       <Form
@@ -43,6 +36,9 @@ export default function App() {
         setisEditid={setisEditid}
       />
       <TodoList
+        text={text}
+        todo={todo}
+        setTodo={setTodo}
         setText={setText}
         editid={editid}
         setisEditid={setisEditid}

@@ -1,29 +1,22 @@
 import React, { memo } from "react";
 import { useDispatch } from "react-redux";
-import { Add, Edit } from "../redux/actions/action";
+import {postadd, updateApi } from "../redux/actions/action";
 import Input from "./Input";
-
-const Form = ({
-  text,
-  setText,
-  active,
-  setactive,
-  toggle,
-  setToggle,
-  editid,
-  setisEditid,
-}) => {
+const Form = ({text,setText,active,setactive,toggle,setToggle,editid,setisEditid,}) => {
   const dispatch = useDispatch();
+
   const addHandler = () => {
     if (text !== "") {
       if (editid !== "") {
-        dispatch(Edit(editid,text))
+        dispatch(updateApi(editid,text));
+        //dispatch(Edit(editid,text))
         setisEditid("");
         setText("");
         setactive(false)
         setToggle(false);
       } else {
-       dispatch(Add({text}))
+        dispatch(postadd(text))
+      // dispatch(Add({text}))
         setText("");
       }
     } else if(editid!=="" )
