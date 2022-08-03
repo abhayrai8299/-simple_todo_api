@@ -1,14 +1,15 @@
 import React,{memo} from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import {postDeleteTodo } from '../redux/actions/action';
+import {postDeleteUser } from '../redux/actions/action';
 
-const TodoList = ({setTodo,editid,setisEditid,setactive,setText}) => {
-  const todos =useSelector((state)=>state.Todoreducer.todos)
+const TodoList = ({setUser,editid,setisEditid,setactive,setText}) => {
+  const users =useSelector((state)=>state.Todoreducer.users)
   const dispatch=useDispatch();
 
+  console.log("TodoList2")
   const deleteHandler = (id) => {
-    dispatch(postDeleteTodo(id))
-    setTodo(todos.filter((item) => item.id !== id));
+    dispatch(postDeleteUser(id))
+    setUser(users.filter((item) => item.id !== id));
     if (editid !== "") {
       setText("");
     }
@@ -16,21 +17,20 @@ const TodoList = ({setTodo,editid,setisEditid,setactive,setText}) => {
     setactive(false);
   };
   const edit = (id) => {
-    const data = todos.find((element) => {
+    const data = users.find((element) => {
       return element.id === id;
     });
-    setText(data.taskName);
+    setText(data.name);
     setisEditid(id);
     setactive(true);
   };
-  console.log("TodoList1")
   return (
      <>
-       {todos.map((item) => {
+       {users.map((item) => {
           return (
             <li key={item.id}>
               <ul>
-                {item.taskName}
+                {item.name}
                 <button onClick={() => edit(item.id)}>Edit</button>
                 <button onClick={() => deleteHandler(item.id)}>Delete</button>
               </ul>

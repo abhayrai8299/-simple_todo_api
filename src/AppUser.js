@@ -1,31 +1,31 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import TodoList from "./components/TodoList";
-import Form from "./components/Form";
+import TodoListUser from "./components/TodoListUser";
+import FormUser from "./components/FormUser";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchapi, SetData } from "./redux/actions/action";
+import {fetchapiUser,SetDataUser } from "./redux/actions/action";
 export default function App() {
-  const todos =useSelector((state)=>state.Todoreducer.todos)
+  const users =useSelector((state)=>state.Todoreducer.users)
   const dispatch = useDispatch();
-  const [todo, setTodo] = useState(todos);
+  const [user, setUser] = useState(users);
   const [text, setText] = useState("");
   const [editid, setisEditid] = useState("");
   const [active, setactive] = useState(false);
   const [toggle, setToggle] = useState(false);
 
   const setData = () => {
-    dispatch(SetData(todo));
-    console.log(todos)
+    dispatch(SetDataUser(user));
   };
   useEffect(() => {
-    dispatch(fetchapi());
+    dispatch(fetchapiUser());
   }, []);
   useEffect(() => {
     setData();
-  }, [todo]);
+  }, [user]);
+  console.log("AppUser Trigger")
   return (
     <div className="App">
-      <Form
+      <FormUser
         text={text}
         setText={setText}
         active={active}
@@ -35,10 +35,9 @@ export default function App() {
         editid={editid}
         setisEditid={setisEditid}
       />
-      <TodoList
-        text={text}
-        todo={todo}
-        setTodo={setTodo}
+      <TodoListUser
+        user={user}
+        setUser={setUser}
         setText={setText}
         editid={editid}
         setisEditid={setisEditid}
