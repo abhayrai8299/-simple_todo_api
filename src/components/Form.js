@@ -1,33 +1,28 @@
 import React, { memo } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector} from "react-redux";
 import { Circles } from "react-loader-spinner";
-import { postaddTodo,updateApiTodo } from "../redux/actions/action";
+import {loadBool1, postaddTodo,updateApiTodo } from "../redux/actions/action";
 import Input from "./Input";
-const Form = ({loading,setLoading,text,setText,active,setactive,toggle,setToggle,editid,setisEditid,}) => {
+const Form = ({loadingtodo,setLoadingTodo,text,setText,active,setactive,toggle,setToggle,editid,setisEditid,}) => {
+  const loader =useSelector((state)=>state.Todoreducer.loader1)
   const dispatch = useDispatch();
 
   console.log("form1")
   const addHandler = () => {
   
     if (text !== "") {
-      setLoading(true);
-      setTimeout(()=>{
-        setLoading(false)
-      },5000)
+      dispatch(loadBool1())
       if (editid !== "") {
-        setTimeout(()=>{
+        dispatch(loadBool1())
           dispatch(updateApiTodo(editid,text));
-        },4000)
-    
-        //dispatch(Edit(editid,text))
-        setisEditid("");
-        setText("");
+          setisEditid("");
+          setLoadingTodo(false)
+          setText("");
         setactive(false)
         setToggle(false);
       } else {
-        dispatch(postaddTodo(text))
-      // dispatch(Add({text}))
-        setText("");
+        dispatch(postaddTodo(text));
+          setText("");
       }
     } else if(editid!=="" )
       {
@@ -55,7 +50,7 @@ const Form = ({loading,setLoading,text,setText,active,setactive,toggle,setToggle
       <h2>Todo_Api</h2>
       <Input toggle={toggle} text={text} setText={setText} />
       <button type="button" onClick={addHandler}>
-        {!active ?loading===false?"Add":<Circles color="#00BFFF" height={10} width={25} />: "Update"}
+        {loader===false?!active?"Add":"Update":<Circles color="#00BFFF" height={10} width={25} />}
       </button>
       {active ? (
         <span className="cancelbtn" onClick={clickHandler}>

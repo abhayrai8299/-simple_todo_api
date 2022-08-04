@@ -1,4 +1,14 @@
 import axios from "axios";
+export const loadBool1= () => {
+  return {
+    type: "loadBool1",
+  };
+};
+export const loadBool2= () => {
+  return {
+    type: "loadBool2",
+  };
+};
 export const SetDataTodo = (text) => {
   return {
     type: "SetDataTodo",
@@ -11,6 +21,7 @@ export const SetDataUser = (text) => {
     payload: text,
   };
 };
+
 export const fetchapiTodo= () => {
    return async (dispatch)=>
    {
@@ -47,6 +58,7 @@ export const postaddUser= (text) => {
   {
    const response = await axios
    .post("https://62e010f4fa8ed271c47dc10e.mockapi.io/users",{name:text})
+   await new Promise((r) => setTimeout(r,5000)); 
     dispatch({ type: "postaddUser",
    payload:response.data})
   }

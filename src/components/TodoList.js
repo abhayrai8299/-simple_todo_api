@@ -1,5 +1,6 @@
 import React,{memo} from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+
 import {postDeleteTodo } from '../redux/actions/action';
 
 const TodoList = ({setTodo,editid,setisEditid,setactive,setText}) => {
@@ -8,7 +9,9 @@ const TodoList = ({setTodo,editid,setisEditid,setactive,setText}) => {
 
   const deleteHandler = (id) => {
     dispatch(postDeleteTodo(id))
-    setTodo(todos.filter((item) => item.id !== id));
+    setTimeout(()=>{
+      setTodo(todos.filter((item) => item.id !== id));
+    },2000)
     if (editid !== "") {
       setText("");
     }
@@ -26,7 +29,7 @@ const TodoList = ({setTodo,editid,setisEditid,setactive,setText}) => {
   console.log("TodoList1")
   return (
      <>
-       {todos.map((item) => {
+       {todos.sort((a,b)=>b.id-a.id).map((item) => {
           return (
             <li key={item.id}>
               <ul>

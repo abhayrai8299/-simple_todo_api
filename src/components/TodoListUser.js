@@ -9,7 +9,10 @@ const TodoList = ({setUser,editid,setisEditid,setactive,setText}) => {
   console.log("TodoList2")
   const deleteHandler = (id) => {
     dispatch(postDeleteUser(id))
-    setUser(users.filter((item) => item.id !== id));
+    setTimeout(()=>{
+      setUser(users.filter((item) => item.id !== id));
+    },2000)
+   
     if (editid !== "") {
       setText("");
     }
@@ -26,7 +29,7 @@ const TodoList = ({setUser,editid,setisEditid,setactive,setText}) => {
   };
   return (
      <>
-       {users.map((item) => {
+       {users.sort((a,b)=>b.id-a.id).map((item) => {
           return (
             <li key={item.id}>
               <ul>

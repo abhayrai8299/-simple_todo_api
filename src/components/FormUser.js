@@ -1,20 +1,31 @@
 import React, { memo } from "react";
-import { useDispatch } from "react-redux";
-import {postaddUser, updateApiUser } from "../redux/actions/action";
+import { useDispatch, useSelector } from "react-redux";
+import { Circles } from "react-loader-spinner";
+import {loadBool2, postaddUser, updateApiUser } from "../redux/actions/action";
 import Input from "./Input";
-const Form = ({text,setText,active,setactive,toggle,setToggle,editid,setisEditid,}) => {
+const Form = ({loadinguser,setLoadingUser,text,setText,active,setactive,toggle,setToggle,editid,setisEditid,}) => {
+  const loader =useSelector((state)=>state.Todoreducer.loader2)
   const dispatch = useDispatch();
 
   const addHandler = () => {
     if (text !== "") {
+      dispatch(loadBool2())
+      setLoadingUser(true);
+      setTimeout(()=>{
+        setLoadingUser(false)
+      },5000)
       if (editid !== "") {
-        dispatch(updateApiUser(editid,text));
-        //dispatch(Edit(editid,text))
-        setisEditid("");
-        setText("");
+        dispatch(loadBool2())
+          dispatch(updateApiUser(editid,text));
+          setisEditid("");
+          setLoadingUser(false)
+          setText("");
         setactive(false)
         setToggle(false);
       } else {
+        setTimeout(()=>{
+          setText("");
+        },5000)
         dispatch(postaddUser(text))
       // dispatch(Add({text}))
         setText("");
@@ -46,7 +57,7 @@ const Form = ({text,setText,active,setactive,toggle,setToggle,editid,setisEditid
       <h2>UserTodo_Api</h2>
       <Input toggle={toggle} text={text} setText={setText} />
       <button type="button" onClick={addHandler}>
-        {!active ? "Add" : "Update"}
+      {!active ?loader===false?"Add":<Circles color="#00BFFF" height={10} width={25} />: "Update"}
       </button>
       {active ? (
         <span className="cancelbtn" onClick={clickHandler}>

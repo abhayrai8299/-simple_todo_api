@@ -1,10 +1,22 @@
 const initialState = {
   todos: [],
   users:[],
+  loader1:false,
+  loader2:false,
 };
 
 export const Todoreducer = (state = initialState, action) => {
   switch (action.type) {
+    case "loadBool1":
+      return {
+        ...state,
+        loader1:state.loader1=true,
+      }
+      case "loadBool2":
+      return {
+        ...state,
+        loader2:state.loader2=true,
+      }
     case "SetDataTodo":
       return {
         ...state,
@@ -28,12 +40,14 @@ export const Todoreducer = (state = initialState, action) => {
         case "postaddTodo":
           return {
             ...state,
-            todos:[...state.todos,{...action.payload}]
+            todos:[...state.todos,{...action.payload}],
+            loader1:state.loader1=false,
           }
           case "postaddUser":
             return {
               ...state,
-              users:[...state.users,{...action.payload}]
+              users:[...state.users,{...action.payload}],
+              loader2:state.loader2=false,
             }
         case "updateApiTodo":
         return {
@@ -44,6 +58,7 @@ export const Todoreducer = (state = initialState, action) => {
             }
             return item;
           }),
+          loader1:state.loader1=false,
         }
         case "updateApiUser":
           return {
@@ -54,6 +69,7 @@ export const Todoreducer = (state = initialState, action) => {
               }
               return item;
             }),
+            loader2:state.loader2=false,
           }
         case "postDeleteTodo":
           const data = state.todos.filter((item) => item.id !== action.payload);
