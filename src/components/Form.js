@@ -1,43 +1,40 @@
-import React, { memo } from "react";
+import React, { memo, useEffect } from "react";
 import { useDispatch, useSelector} from "react-redux";
 import { Circles } from "react-loader-spinner";
 import {loadBool1, postaddTodo,updateApiTodo } from "../redux/actions/action";
 import Input from "./Input";
-const Form = ({loadingtodo,setLoadingTodo,text,setText,active,setactive,toggle,setToggle,editid,setisEditid,}) => {
+const Form = ({text,setText,active,setactive,toggle,setToggle,editid,setisEditid,}) => {
   const loader =useSelector((state)=>state.Todoreducer.loader1)
-  const dispatch = useDispatch();
 
+useEffect(()=>{
+   if(loader===false)
+   {
+    setText("");
+   }
+},[loader])
+
+  const dispatch = useDispatch();
   console.log("form1")
   const addHandler = () => {
-  
     if (text !== "") {
-      dispatch(loadBool1())
       if (editid !== "") {
-        dispatch(loadBool1())
-          dispatch(updateApiTodo(editid,text));
+        dispatch(loadBool1(true))
+          dispatch(updateApiTodo(editid,text,false));
           setisEditid("");
-          setLoadingTodo(false)
-          setText("");
-        setactive(false)
-        setToggle(false);
+         setactive(false)
+         setToggle(false);
       } else {
-        dispatch(postaddTodo(text));
-          setText("");
+        dispatch(loadBool1(true))
+        dispatch(postaddTodo(text,false));
       }
     } else if(editid!=="" )
       {
-        setToggle(true)
-        setTimeout(()=>{
         setToggle(false)
         setactive(true);
-        },2000)
       }
       else
       {
-        setToggle(true)
-        setTimeout(()=>{
         setToggle(false)
-        },2000)
       }
   };
   const clickHandler = () => {

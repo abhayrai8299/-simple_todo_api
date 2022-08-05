@@ -1,49 +1,42 @@
-import React, { memo } from "react";
+import React, { memo, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Circles } from "react-loader-spinner";
 import {loadBool2, postaddUser, updateApiUser } from "../redux/actions/action";
 import Input from "./Input";
-const Form = ({loadinguser,setLoadingUser,text,setText,active,setactive,toggle,setToggle,editid,setisEditid,}) => {
+const Form = ({setLoadingUser,text,setText,active,setactive,toggle,setToggle,editid,setisEditid,}) => {
   const loader =useSelector((state)=>state.Todoreducer.loader2)
   const dispatch = useDispatch();
 
+
+  useEffect(()=>{
+     if(loader===false)
+     {
+      setText("");
+     }
+  },[loader])
+
   const addHandler = () => {
     if (text !== "") {
-      dispatch(loadBool2())
-      setLoadingUser(true);
-      setTimeout(()=>{
-        setLoadingUser(false)
-      },5000)
       if (editid !== "") {
-        dispatch(loadBool2())
-          dispatch(updateApiUser(editid,text));
+          dispatch(loadBool2(true));
+          dispatch(updateApiUser(editid,text,false));
           setisEditid("");
           setLoadingUser(false)
-          setText("");
         setactive(false)
         setToggle(false);
       } else {
-        setTimeout(()=>{
-          setText("");
-        },5000)
-        dispatch(postaddUser(text))
-      // dispatch(Add({text}))
-        setText("");
+        dispatch(loadBool2(true))
+        dispatch(postaddUser(text,false))
       }
     } else if(editid!=="" )
       {
-        setToggle(true)
-        setTimeout(()=>{
         setToggle(false)
         setactive(true);
-        },2000)
+      
       }
       else
       {
-        setToggle(true)
-        setTimeout(()=>{
         setToggle(false)
-        },2000)
       }
   };
   const clickHandler = () => {

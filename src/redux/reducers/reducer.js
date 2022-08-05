@@ -3,20 +3,27 @@ const initialState = {
   users:[],
   loader1:false,
   loader2:false,
+  delload1:false,
 };
 
 export const Todoreducer = (state = initialState, action) => {
   switch (action.type) {
     case "loadBool1":
+      console.log(action.payload);
       return {
         ...state,
-        loader1:state.loader1=true,
+        loader1:action.tru,
       }
       case "loadBool2":
       return {
         ...state,
-        loader2:state.loader2=true,
+        loader2:action.tru,
       }
+      case "loadDel1":
+        return {
+          ...state,
+          delload1:action.tru,
+        }
     case "SetDataTodo":
       return {
         ...state,
@@ -41,13 +48,13 @@ export const Todoreducer = (state = initialState, action) => {
           return {
             ...state,
             todos:[...state.todos,{...action.payload}],
-            loader1:state.loader1=false,
+            loader1:action.flag,
           }
           case "postaddUser":
             return {
               ...state,
               users:[...state.users,{...action.payload}],
-              loader2:state.loader2=false,
+              loader2:action.flag,
             }
         case "updateApiTodo":
         return {
@@ -58,7 +65,7 @@ export const Todoreducer = (state = initialState, action) => {
             }
             return item;
           }),
-          loader1:state.loader1=false,
+          loader1:action.flag,
         }
         case "updateApiUser":
           return {
@@ -69,13 +76,13 @@ export const Todoreducer = (state = initialState, action) => {
               }
               return item;
             }),
-            loader2:state.loader2=false,
+            loader2:action.flag,
           }
         case "postDeleteTodo":
-          const data = state.todos.filter((item) => item.id !== action.payload);
         return {
           ...state,
-          todos:data,
+          todos:state.todos.filter((item) => item.id !== action.payload),
+          delload1:action.flag,
         }
         case "postDeleteUser":
           const element = state.users.filter((item) => item.id !== action.payload);

@@ -43,7 +43,6 @@ export default function App() {
         user={user}
         setUser={setUser}
         setText={setText}
-        editid={editid}
         setisEditid={setisEditid}
         setactive={setactive}
       />

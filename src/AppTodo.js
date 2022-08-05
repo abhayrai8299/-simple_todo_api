@@ -12,7 +12,6 @@ export default function App() {
   const [editid, setisEditid] = useState("");
   const [active, setactive] = useState(false);
   const [toggle, setToggle] = useState(false);
-  const [loadingtodo,setLoadingTodo]=useState(false);
 
   const setData = () => {
     dispatch(SetDataTodo(todo));
@@ -29,8 +28,6 @@ export default function App() {
   return (
     <div className="App">
       <Form
-        loadingtodo={loadingtodo}
-        setLoadingTodo={setLoadingTodo}
         text={text}
         setText={setText}
         active={active}
@@ -43,8 +40,7 @@ export default function App() {
       <TodoList
         todo={todo}
         setTodo={setTodo}
-        setText={setText}
-        editid={editid}
+         setText={setText}
         setisEditid={setisEditid}
         setactive={setactive}
       />

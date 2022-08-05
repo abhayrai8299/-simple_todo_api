@@ -2,20 +2,15 @@ import React,{memo} from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import {postDeleteUser } from '../redux/actions/action';
 
-const TodoList = ({setUser,editid,setisEditid,setactive,setText}) => {
+const TodoList = ({setUser,setisEditid,setactive,setText}) => {
   const users =useSelector((state)=>state.Todoreducer.users)
   const dispatch=useDispatch();
 
   console.log("TodoList2")
   const deleteHandler = (id) => {
     dispatch(postDeleteUser(id))
-    setTimeout(()=>{
       setUser(users.filter((item) => item.id !== id));
-    },2000)
-   
-    if (editid !== "") {
       setText("");
-    }
     setisEditid("");
     setactive(false);
   };
