@@ -125,14 +125,16 @@ export const postDeleteTodo= (id,falsee) => {
   })
   }
 };
-export const postDeleteUser= (id) => {
+export const postDeleteUser= (id,falsee) => {
   return async (dispatch)=>
   {
     // await new Promise((r) => setTimeout(r, 1000)); 
    const response= await axios
     .delete(`https://62e010f4fa8ed271c47dc10e.mockapi.io/users/${id}`)
-   dispatch({ type: "postDeleteUser",
-   payload:response.data
+    await new Promise((r) => setTimeout(r, 5000)); 
+    dispatch({ type: "postDeleteUser",
+   payload:response.data,
+   flag:falsee
   })
   }
 

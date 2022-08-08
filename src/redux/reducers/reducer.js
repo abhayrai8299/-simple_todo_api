@@ -4,6 +4,7 @@ const initialState = {
   loader1:false,
   loader2:false,
   delload1:false,
+  delload2:false,
 };
 
 export const Todoreducer = (state = initialState, action) => {
@@ -24,6 +25,11 @@ export const Todoreducer = (state = initialState, action) => {
           ...state,
           delload1:action.tru,
         }
+        case "loadDel2":
+          return {
+            ...state,
+            delload2:action.tru,
+          }
     case "SetDataTodo":
       return {
         ...state,
@@ -89,6 +95,7 @@ export const Todoreducer = (state = initialState, action) => {
         return {
           ...state,
           users:element,
+          delload2:action.flag,
         }
     default:
       return state;
